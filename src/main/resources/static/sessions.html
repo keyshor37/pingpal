@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html>
+<head><title>PingPal - Sessions</title><style>body{font-family:Arial;margin:0;background:#1a1a2e;color:white;}.nav{background:#16213e;padding:15px 30px;display:flex;justify-content:space-between;align-items:center;}.nav h1{color:#00d4ff;margin:0;}.nav a{color:white;text-decoration:none;margin-left:20px;}.container{max-width:900px;margin:40px auto;padding:20px;}h2{color:#00d4ff;}.form{background:#16213e;padding:30px;border-radius:10px;margin-bottom:30px;}input{width:100%;padding:12px;margin:8px 0;background:#0f3460;border:1px solid #00d4ff;border-radius:5px;color:white;box-sizing:border-box;}button{padding:12px 25px;background:#00d4ff;color:#1a1a2e;border:none;border-radius:5px;cursor:pointer;font-size:16px;margin-top:10px;}.msg{padding:10px;border-radius:5px;margin-top:10px;background:#1e8449;}</style></head>
+<body>
+<div class='nav'><h1>PingPal</h1><div><a href='/index.html'>Home</a><a href='/register.html'>Register</a><a href='/players.html'>Find Players</a><a href='/sessions.html'>Sessions</a></div></div>
+<div class='container'><h2>Sessions</h2><div class='form'><h3 style='color:#00d4ff;margin-top:0;'>Create New Session</h3><input type='text' id='title' placeholder='Session Title'/><input type='text' id='venue' placeholder='Venue Name'/><input type='text' id='city' placeholder='City'/><input type='datetime-local' id='date'/><input type='number' id='maxPlayers' placeholder='Max Players' min='2' max='20'/><button onclick='createSession()'>Create Session</button><div id='msg' style='display:none' class='msg'></div></div></div>
+<script>function createSession(){const m=document.getElementById('msg');m.style.display='block';m.textContent='Session created successfully!';}</script>
+</body></html>
