@@ -1,0 +1,10 @@
+﻿services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: pingpal-db
+    environment:
+      POSTGRES_DB: pingpal
+      POSTGRES_USER: pingpal
+      POSTGRES_PASSWORD: pingpal123
+    ports:
+      - "5433:5432"
