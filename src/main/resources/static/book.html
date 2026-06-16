@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>PingPal - Book a Coach</title>
+    <style>
+        body{font-family:Arial;margin:0;background:#1a1a2e;color:white}
+        .nav{background:#16213e;padding:15px 30px;display:flex;justify-content:space-between;align-items:center}
+        .nav h1{color:#00d4ff;margin:0}
+        .nav a{color:white;text-decoration:none;margin-left:20px}
+        .container{max-width:600px;margin:50px auto;background:#16213e;padding:40px;border-radius:10px}
+        h2{color:#00d4ff;text-align:center}
+        .info{color:#00d4ff;font-size:20px;font-weight:bold;margin-bottom:20px;padding:15px;background:#0f3460;border-radius:8px}
+        input,textarea{width:100%;padding:12px;margin:8px 0;background:#0f3460;border:1px solid #00d4ff;border-radius:5px;color:white;box-sizing:border-box;font-size:15px}
+        textarea{height:100px}
+        button{width:100%;padding:15px;background:#00d4ff;color:#1a1a2e;border:none;border-radius:5px;font-size:16px;cursor:pointer;margin-top:15px;font-weight:bold}
+        #result{margin-top:20px;padding:20px;border-radius:8px;text-align:center;font-size:16px;display:none}
+        .success{background:#1e8449}
+        .error{background:#922b21}
+    </style>
+</head>
+<body>
+<div class="nav"><h1>PingPal</h1><div><a href="/index.html">Home</a><a href="/coaches.html">Coaches</a></div></div>
+<div class="container">
+    <h2>Book a Coach</h2>
+    <div class="info" id="info">Loading...</div>
+    <input type="text" id="nm" placeholder="Your Name">
+    <input type="email" id="em" placeholder="Your Email">
+    <input type="datetime-local" id="dt">
+    <textarea id="mg" placeholder="Message to coach - your goals and what you want to improve"></textarea>
+    <button onclick="sendBooking()">Send Booking Request</button>
+    <div id="result"></div>
+</div>
+<script>
+    var q = new URLSearchParams(location.search);
+    var cname = q.get("name");
+    var crate = q.get("rate");
+    var ccity = q.get("city");
+    var cid = q.get("id");
+    document.getElementById("info").textContent = cname + " - EUR " + crate + "/hr - " + ccity;
+
+    function sendBooking() {
+        var result = document.getElementById("result");
+        var body = {
+            playerName: document.getElementById("nm").value,
+            playerEmail: document.getElementById("em").value,
+            coachId: cid,
+            coachName: cname,
+            preferredDate: document.getElementById("dt").value,
+            message: document.getElementById("mg").value
+        };
+        fetch("/api/bookings", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(body)
+        }).then(function(r) {
+            result.style.display = "block";
+            if(r.ok) {
+                result.className = "success";
+                result.textContent = "Booking sent successfully! " + cname + " will contact you soon.";
+            } else {
+                result.className = "error";
+                result.textContent = "Error sending booking. Please try again.";
+            }
+        }).catch(function() {
+            result.style.display = "block";
+            result.className = "error";
+            result.textContent = "Connection error. Please try again.";
+        });
+    }
+</script>
+</body>
+</html>
